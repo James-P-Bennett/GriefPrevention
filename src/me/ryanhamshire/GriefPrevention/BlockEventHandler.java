@@ -708,8 +708,24 @@ public class BlockEventHandler implements Listener
 		
 		//everything else is NOT OK
 		dispenseEvent.setCancelled(true);
-	}		
-	
+	}
+
+	// Check if clicked block is ME Storage Monitor & then cancel all interactions.
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
+	public void onPlayerInteract(PlayerInteractEvent event) {
+		if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+			Player player = event.getPlayer();
+			Block clickedBlock = event.getClickedBlock();
+			if (clickedBlock.getTypeId() == 901:12) {
+				Claim claim = this.dataStore.getClaimAt(clickedBlock.getLocation(), false, null);
+				if (claim == null || claim.allowAccess(player) != null) {
+					event.setCancelled(true);
+					GriefPrevention.sendMessage(player, TextMode.Err, "You don't have permission to interact with ME Storage Monitor.");
+				}
+			}
+		}
+	}
+
 	@EventHandler(ignoreCancelled = true)
 	public void onTreeGrow (StructureGrowEvent growEvent)
 	{

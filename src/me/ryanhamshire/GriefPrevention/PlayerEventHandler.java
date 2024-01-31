@@ -920,6 +920,37 @@ class PlayerEventHandler implements Listener
 		}
 	}
 
+	// Wrath Igniter Restrictions
+	// Player is in a claim but not within 10 blocks of the claim border
+	// Self-note, this is kinda scuffed. In-claim border padding for extra protection measure
+	// Adjust if needed, inner border padding is 10 blocks
+	// Multiple text outputs that I should make configurable
+	// In-claim border padding should also be configurable
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
+	public void onSpecialItemUse(PlayerInteractEvent interactEvent) {
+		if (interactEvent.getAction() == Action.RIGHT_CLICK_BLOCK) {
+			Player player = interactEvent.getPlayer();
+			Block clickedBlock = interactEvent.getClickedBlock();
+			int itemID = player.getInventory().getItemInMainHand().getType().getId();
+			if (itemID == 19263) {
+				PlayerData playerData = this.dataStore.getPlayerData(player.getName());
+				Claim claim = this.dataStore.getClaimAt(clickedBlock.getLocation(), false, playerData.lastClaim);
+				if (claim != null) {
+					Location playerLocation = player.getLocation();
+					Cuboid claimBounds = claim.getGreaterBoundary();
+					if (claimBounds.isInBounds(playerLocation, 10)) {
+						return;
+					} else {
+						GriefPrevention.sendMessage(player, TextMode.Err, "You can only use Wrath Igniters 10 blocks within your trusted claim border.");
+						interactEvent.setCancelled(true);
+						return;
+					}
+				}
+				GriefPrevention.sendMessage(player, TextMode.Err, "You can only use Wrath Igniters 10 blocks within your trusted claim border.");
+				interactEvent.setCancelled(true);
+			}
+		}
+	}
 
 	//block use of buckets within other players' claims
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)

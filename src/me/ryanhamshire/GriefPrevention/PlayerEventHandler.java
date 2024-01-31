@@ -879,7 +879,28 @@ class PlayerEventHandler implements Listener
 			}
 		}		
 	}
-	
+
+	// Prevent players from using Entropy Accelerator / Vibration Catalyst outside of trusted claims.
+	// Block usage in wilderness.
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
+	public void onCustomItemUse(PlayerInteractEvent interactEvent) {
+		if (interactEvent.getAction() == Action.RIGHT_CLICK_BLOCK) {
+			Player player = interactEvent.getPlayer();
+			Block clickedBlock = interactEvent.getClickedBlock();
+			int itemID = player.getInventory().getItemInMainHand().getType().getId();
+			if (itemID == 4363 || itemID == 4364) {
+				PlayerData playerData = this.dataStore.getPlayerData(player.getName());
+				Claim claim = this.dataStore.getClaimAt(clickedBlock.getLocation(), false, playerData.lastClaim);
+
+				if (claim == null || !claim.allowAccess(playerData)) {
+					GriefPrevention.sendMessage(player, TextMode.Err, "You can only use Entropy Accelerators & Vibration Catalysts within trusted claims.");
+					interactEvent.setCancelled(true);
+				}
+			}
+		}
+	}
+
+
 	//block use of buckets within other players' claims
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
 	public void onPlayerBucketEmpty (PlayerBucketEmptyEvent bucketEvent)

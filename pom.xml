@@ -57,19 +57,19 @@
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldguard</artifactId>
-            <version></version>
+            <version>5.7.1</version>
         </dependency>
         <!--WorldGuard depends on WorldEdit-->
         <dependency>
             <groupId>com.sk89q.worldedit</groupId>
             <artifactId>worldedit-bukkit</artifactId>
-            <version></version>
+            <version>5.5.1</version>
         </dependency>
         <!--Vault dependency-->
         <dependency>
             <groupId>net.milkbowl.vault</groupId>
             <artifactId>VaultAPI</artifactId>
-            <version></version>
+            <version>1.2.24-b304</version>
         </dependency>
         <!--Google stuff-->
         <dependency>

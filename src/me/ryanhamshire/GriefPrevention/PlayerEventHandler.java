@@ -770,7 +770,7 @@ class PlayerEventHandler implements Listener {
     // Prevent players from using Entropy Accelerator / Vibration Catalyst outside of trusted claims.
     // Block usage in wilderness.
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
-    public void onCustomItemUse(PlayerInteractEvent interactEvent) {
+    public void onEntropyItemUse(PlayerInteractEvent interactEvent) {
         if (interactEvent.getAction() == Action.RIGHT_CLICK_BLOCK) {
             Player player = interactEvent.getPlayer();
             Block clickedBlock = interactEvent.getClickedBlock();
@@ -779,7 +779,7 @@ class PlayerEventHandler implements Listener {
                 PlayerData playerData = this.dataStore.getPlayerData(player.getName());
                 Claim claim = this.dataStore.getClaimAt(clickedBlock.getLocation(), false, playerData.lastClaim);
 
-                if (claim == null || !claim.allowAccess(playerData)) {
+                if (claim == null || !claim.allowAccess(player).isEmpty()) {
                     GriefPrevention.sendMessage(player, TextMode.Err, "You can only use Entropy Accelerators & Vibration Catalysts within trusted claims.");
                     interactEvent.setCancelled(true);
                 }
@@ -790,7 +790,7 @@ class PlayerEventHandler implements Listener {
     // Prevent players from using Minium Stones outside of trusted claims.
     // Block usage in wilderness.
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
-    public void onCustomItemUse(PlayerInteractEvent interactEvent) {
+    public void onMiniumItemUse(PlayerInteractEvent interactEvent) {
         if (interactEvent.getAction() == Action.RIGHT_CLICK_BLOCK) {
             Player player = interactEvent.getPlayer();
             Block clickedBlock = interactEvent.getClickedBlock();
@@ -799,7 +799,7 @@ class PlayerEventHandler implements Listener {
                 PlayerData playerData = this.dataStore.getPlayerData(player.getName());
                 Claim claim = this.dataStore.getClaimAt(clickedBlock.getLocation(), false, playerData.lastClaim);
 
-                if (claim == null || !claim.allowAccess(playerData)) {
+                if (claim == null || !claim.allowAccess(player).isEmpty()) {
                     GriefPrevention.sendMessage(player, TextMode.Err, "You can only use Minium Stones within trusted claims.");
                     interactEvent.setCancelled(true);
                 }

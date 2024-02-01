@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="craftbukkit-1.4.7-R1.1-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/craftbukkit-1.4.7-R1.1-SNAPSHOT.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/Vault.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/worldedit-5.5.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/worldguard-5.7.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/craftbukkit-1.4.7-R1.1-SNAPSHOT.jar!/" />
+    </SOURCES>
+  </library>
+</component>

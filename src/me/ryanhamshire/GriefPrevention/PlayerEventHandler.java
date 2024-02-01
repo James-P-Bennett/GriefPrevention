@@ -813,28 +813,33 @@ class PlayerEventHandler implements Listener {
     // Adjust if needed, inner border padding is 10 blocks
     // Multiple text outputs that I should make configurable
     // In-claim border padding should also be configurable
+    // Border restriction might not work and will likely require a new method
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
-    public void onSpecialItemUse(PlayerInteractEvent interactEvent) {
+    public void onWrathIgniterItemUse(PlayerInteractEvent interactEvent) {
         if (interactEvent.getAction() == Action.RIGHT_CLICK_BLOCK) {
             Player player = interactEvent.getPlayer();
             Block clickedBlock = interactEvent.getClickedBlock();
             int itemID = player.getInventory().getItemInHand().getType().getId();
+
             if (itemID == 19263) {
                 PlayerData playerData = this.dataStore.getPlayerData(player.getName());
                 Claim claim = this.dataStore.getClaimAt(clickedBlock.getLocation(), false, playerData.lastClaim);
-                if (claim != null) {
+
+                if (claim == null || !claim.allowAccess(player).isEmpty()) {
+                    GriefPrevention.sendMessage(player, TextMode.Err, "You can only use Wrath Igniters within trusted claims.");
+                    interactEvent.setCancelled(true);
+                } else {
+                    // Check if the player is at least 10 blocks away from the claim border
+                    // This is really frustrating trying to math out and may not work
                     Location playerLocation = player.getLocation();
-                    Cuboid claimBounds = claim.getGreaterBoundary();
-                    if (claimBounds.isInBounds(playerLocation, 10)) {
-                        return;
-                    } else {
-                        GriefPrevention.sendMessage(player, TextMode.Err, "You can only use Wrath Igniters 10 blocks within your trusted claim border.");
+                    Location claimCenter = claim.getLesserBoundaryCorner().add(claim.getGreaterBoundaryCorner()).multiply(0.5);
+                    double distance = playerLocation.distance(claimCenter);
+
+                    if (distance < 10.0) {
+                        GriefPrevention.sendMessage(player, TextMode.Err, "You can only use Wrath Igniters at least 10 blocks away from the claim border.");
                         interactEvent.setCancelled(true);
-                        return;
                     }
                 }
-                GriefPrevention.sendMessage(player, TextMode.Err, "You can only use Wrath Igniters 10 blocks within your trusted claim border.");
-                interactEvent.setCancelled(true);
             }
         }
     }

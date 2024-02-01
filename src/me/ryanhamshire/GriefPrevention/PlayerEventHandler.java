@@ -774,7 +774,7 @@ class PlayerEventHandler implements Listener {
         if (interactEvent.getAction() == Action.RIGHT_CLICK_BLOCK) {
             Player player = interactEvent.getPlayer();
             Block clickedBlock = interactEvent.getClickedBlock();
-            int itemID = player.getInventory().getItemInMainHand().getType().getId();
+            int itemID = player.getInventory().getItemInHand().getType().getId();
             if (itemID == 4363 || itemID == 4364) {
                 PlayerData playerData = this.dataStore.getPlayerData(player.getName());
                 Claim claim = this.dataStore.getClaimAt(clickedBlock.getLocation(), false, playerData.lastClaim);
@@ -794,7 +794,7 @@ class PlayerEventHandler implements Listener {
         if (interactEvent.getAction() == Action.RIGHT_CLICK_BLOCK) {
             Player player = interactEvent.getPlayer();
             Block clickedBlock = interactEvent.getClickedBlock();
-            int itemID = player.getInventory().getItemInMainHand().getType().getId();
+            int itemID = player.getInventory().getItemInHand().getType().getId();
             if (itemID == 27002) {
                 PlayerData playerData = this.dataStore.getPlayerData(player.getName());
                 Claim claim = this.dataStore.getClaimAt(clickedBlock.getLocation(), false, playerData.lastClaim);
@@ -818,7 +818,7 @@ class PlayerEventHandler implements Listener {
         if (interactEvent.getAction() == Action.RIGHT_CLICK_BLOCK) {
             Player player = interactEvent.getPlayer();
             Block clickedBlock = interactEvent.getClickedBlock();
-            int itemID = player.getInventory().getItemInMainHand().getType().getId();
+            int itemID = player.getInventory().getItemInHand().getType().getId();
             if (itemID == 19263) {
                 PlayerData playerData = this.dataStore.getPlayerData(player.getName());
                 Claim claim = this.dataStore.getClaimAt(clickedBlock.getLocation(), false, playerData.lastClaim);

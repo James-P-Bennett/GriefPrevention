@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="ee3-universal-pre1f">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/ee3-universal-pre1f.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/appeng-rv9-i.zip!/" />
+      <root url="jar://$PROJECT_DIR$/lib/Factorization-0.7.21.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/forge-1.4.7-6.6.2.534-universal.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -9,6 +9,9 @@
       </configuration>
     </facet>
   </component>
+  <component name="McpModuleSettings">
+    <option name="srgType" value="SRG" />
+  </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
@@ -17,5 +20,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="craftbukkit-1.4.7-R1.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="ee3-universal-pre1f" level="project" />
   </component>
 </module>

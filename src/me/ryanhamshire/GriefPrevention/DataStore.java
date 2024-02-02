@@ -967,7 +967,12 @@ public abstract class DataStore
 		this.addDefault(defaults, Messages.ExplosivesDisabled, "This claim is now protected from explosions.  Use /ClaimExplosions again to disable.", null);
 		this.addDefault(defaults, Messages.ExplosivesEnabled, "This claim is now vulnerable to explosions.  Use /ClaimExplosions again to re-enable protections.", null);
 		this.addDefault(defaults, Messages.ClaimExplosivesAdvertisement, "To allow explosives to destroy blocks in this land claim, use /ClaimExplosions.", null);
-		this.addDefault(defaults, Messages.PlayerInPvPSafeZone, "That player is in a PvP safe zone.", null);		
+		this.addDefault(defaults, Messages.PlayerInPvPSafeZone, "That player is in a PvP safe zone.", null);
+		this.addDefault(defaults, Messages.NoMeAccess, "You don't have access to this ME Storage Monitor.", null);
+		this.addDefault(defaults, Messages.WrathIgniters, "You can only use Wrath Igniters within trusted claims.", null);
+		this.addDefault(defaults, Messages.WrathIgnitersBorder, "You can only use Wrath Igniters at least 10 blocks away from the claim border.", null);
+		this.addDefault(defaults, Messages.Entropy, "You can only use Entropy Accelerators & Vibration Catalysts within trusted claims.", null);
+		this.addDefault(defaults, Messages.Minium, "You can only use Minium Stones within trusted claims.", null);
 		
 		//load the config file
 		FileConfiguration config = YamlConfiguration.loadConfiguration(new File(messagesFilePath));

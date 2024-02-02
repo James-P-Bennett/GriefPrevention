@@ -780,7 +780,7 @@ class PlayerEventHandler implements Listener {
                 Claim claim = this.dataStore.getClaimAt(clickedBlock.getLocation(), false, playerData.lastClaim);
 
                 if (claim == null || !claim.allowAccess(player).isEmpty()) {
-                    GriefPrevention.sendMessage(player, TextMode.Err, "You can only use Entropy Accelerators & Vibration Catalysts within trusted claims.");
+                    GriefPrevention.sendMessage(player, TextMode.Err, Messages.Entropy);
                     interactEvent.setCancelled(true);
                 }
             }
@@ -800,7 +800,7 @@ class PlayerEventHandler implements Listener {
                 Claim claim = this.dataStore.getClaimAt(clickedBlock.getLocation(), false, playerData.lastClaim);
 
                 if (claim == null || !claim.allowAccess(player).isEmpty()) {
-                    GriefPrevention.sendMessage(player, TextMode.Err, "You can only use Minium Stones within trusted claims.");
+                    GriefPrevention.sendMessage(player, TextMode.Err, Messages.Minium);
                     interactEvent.setCancelled(true);
                 }
             }
@@ -811,7 +811,6 @@ class PlayerEventHandler implements Listener {
     // Player is in a claim but not within 10 blocks of the claim border
     // Self-note, this is kinda scuffed. In-claim border padding for extra protection measure
     // Adjust if needed, inner border padding is 10 blocks
-    // Multiple text outputs that I should make configurable
     // In-claim border padding should also be configurable
     // Border restriction might not work and will likely require a new method
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
@@ -826,7 +825,7 @@ class PlayerEventHandler implements Listener {
                 Claim claim = this.dataStore.getClaimAt(clickedBlock.getLocation(), false, playerData.lastClaim);
 
                 if (claim == null || !claim.allowAccess(player).isEmpty()) {
-                    GriefPrevention.sendMessage(player, TextMode.Err, "You can only use Wrath Igniters within trusted claims.");
+                    GriefPrevention.sendMessage(player, TextMode.Err, Messages.WrathIgniters);
                     interactEvent.setCancelled(true);
                 } else {
                     // Check if the player is at least 10 blocks away from the claim border
@@ -836,7 +835,7 @@ class PlayerEventHandler implements Listener {
                     double distance = playerLocation.distance(claimCenter);
 
                     if (distance < 10.0) {
-                        GriefPrevention.sendMessage(player, TextMode.Err, "You can only use Wrath Igniters at least 10 blocks away from the claim border.");
+                        GriefPrevention.sendMessage(player, TextMode.Err, Messages.WrathIgnitersBorder);
                         interactEvent.setCancelled(true);
                     }
                 }

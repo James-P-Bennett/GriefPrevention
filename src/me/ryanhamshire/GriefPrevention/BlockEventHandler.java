@@ -18,14 +18,7 @@
 
 package me.ryanhamshire.GriefPrevention;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -35,23 +28,17 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockBurnEvent;
-import org.bukkit.event.block.BlockDamageEvent;
-import org.bukkit.event.block.BlockDispenseEvent;
-import org.bukkit.event.block.BlockFromToEvent;
-import org.bukkit.event.block.BlockIgniteEvent;
+import org.bukkit.event.block.*;
 import org.bukkit.event.block.BlockIgniteEvent.IgniteCause;
-import org.bukkit.event.block.BlockPistonExtendEvent;
-import org.bukkit.event.block.BlockPistonRetractEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.block.BlockSpreadEvent;
-import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.world.StructureGrowEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.util.Vector;
+import org.bukkit.event.player.PlayerInteractEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 //event handlers related to blocks
 public class BlockEventHandler implements Listener 
@@ -711,16 +698,23 @@ public class BlockEventHandler implements Listener
 	}
 
 	// Check if clicked block is ME Storage Monitor & then cancel all interactions.
-	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
-	public void onPlayerInteract(PlayerInteractEvent event) {
-		if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-			Player player = event.getPlayer();
-			Block clickedBlock = event.getClickedBlock();
-			if (clickedBlock.getTypeId() == 901:12) {
-				Claim claim = this.dataStore.getClaimAt(clickedBlock.getLocation(), false, null);
-				if (claim == null || claim.allowAccess(player) != null) {
-					event.setCancelled(true);
-					GriefPrevention.sendMessage(player, TextMode.Err, "You don't have permission to interact with ME Storage Monitor.");
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
+	public void onStorageMonitorInteract(PlayerInteractEvent interactEvent) {
+		Action action = interactEvent.getAction();
+		Player player = interactEvent.getPlayer();
+		Block clickedBlock = interactEvent.getClickedBlock();
+
+		if (action == Action.RIGHT_CLICK_BLOCK || action == Action.RIGHT_CLICK_AIR) {
+			int itemID = player.getInventory().getItemInHand().getType().getId();
+
+			// Checks for real mod-assigned namespace blkStorageMonitor
+			if (clickedBlock != null && clickedBlock.getType() == Material.matchMaterial("blkStorageMonitor")) {
+				PlayerData playerData = this.dataStore.getPlayerData(player.getName());
+				Claim claim = this.dataStore.getClaimAt(clickedBlock.getLocation(), false, playerData.lastClaim);
+
+				if (claim == null || !claim.allowAccess(player).isEmpty()) {
+					GriefPrevention.sendMessage(player, TextMode.Err, Messages.NoMeAccess);
+					interactEvent.setCancelled(true);
 				}
 			}
 		}
